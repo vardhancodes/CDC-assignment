@@ -1,0 +1,34 @@
+//House Robber Problem 
+
+import java.util.*;
+
+public class HouseRobber {
+
+    // Helper function to handle the recursion
+    public static int helper(List<Integer> nums, int idx) {
+        // Base case: if index exceeds array size, return 0
+        if (idx > nums.size() - 1) return 0;
+
+        // Option 1: skip the current house
+        int skip = helper(nums, idx + 1);
+
+        // Option 2: rob the current house and move to idx + 2
+        int rob = nums.get(idx) + helper(nums, idx + 2);
+
+        // Return the maximum of the two choices
+        return Math.max(skip, rob);
+    }
+
+    // Main function to call helper starting from index 0
+    public static int rob(List<Integer> nums) {
+        return helper(nums, 0);
+    }
+
+    public static void main(String[] args) {
+        // Creating a list of house values
+        List<Integer> houses = Arrays.asList(1, 2, 3, 1);
+
+        // Calling rob function and printing result
+        System.out.println("The max amount we can rob is: " + rob(houses));
+    }
+}
