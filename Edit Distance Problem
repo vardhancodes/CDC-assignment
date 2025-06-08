@@ -1,0 +1,58 @@
+//Edit Distance Problem 
+
+import java.util.*;
+
+public class EditDistance {
+
+    // Memoization table to store results of subproblems
+    static int[][] dp;
+
+    public static int minDistance(String word1, String word2) {
+        int m = word1.length();
+        int n = word2.length();
+
+        // Initialize dp table with -1 (indicating not yet computed)
+        dp = new int[m][n];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+
+        // Call recursive helper starting from the last characters
+        return helper(word1, word2, m - 1, n - 1);
+    }
+
+    // Recursive helper function
+    private static int helper(String word1, String word2, int i, int j) {
+        // If word1 is exhausted, we need to insert remaining characters of word2
+        if (i < 0) return j + 1;
+
+        // If word2 is exhausted, we need to delete remaining characters of word1
+        if (j < 0) return i + 1;
+
+        // Return already computed value
+        if (dp[i][j] != -1) return dp[i][j];
+
+        // If characters match, move diagonally without any operation
+        if (word1.charAt(i) == word2.charAt(j)) {
+            dp[i][j] = helper(word1, word2, i - 1, j - 1);
+        } else {
+            // Perform all three operations and take the minimum:
+            int insert = 1 + helper(word1, word2, i, j - 1);     // insert into word1
+            int delete = 1 + helper(word1, word2, i - 1, j);     // delete from word1
+            int replace = 1 + helper(word1, word2, i - 1, j - 1); // replace character in word1
+
+            dp[i][j] = Math.min(insert, Math.min(delete, replace));
+        }
+
+        return dp[i][j];
+    }
+
+    // Main method to test the function
+    public static void main(String[] args) {
+        String word1 = "horse";
+        String word2 = "ros";
+
+        int result = minDistance(word1, word2);
+        System.out.println("Minimum edit distance: " + result); // Expected: 3
+    }
+}
