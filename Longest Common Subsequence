@@ -1,0 +1,57 @@
+//Longest Common Subsequence 
+
+import java.util.*;
+
+public class LongestCommonSubsequence {
+
+    // DP memo table to cache results
+    static int[][] dp;
+
+    public static int longestCommonSubsequence(String text1, String text2) {
+        int m = text1.length();
+        int n = text2.length();
+
+        // Initialize memo table with -1
+        dp = new int[m][n];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+
+        // Start recursion from the end of both strings
+        return lcsHelper(text1, text2, m - 1, n - 1);
+    }
+
+    // Recursive helper function with memoization
+    private static int lcsHelper(String s1, String s2, int i, int j) {
+        // Base case: if either string is exhausted
+        if (i < 0 || j < 0) {
+            return 0;
+        }
+
+        // Return cached value if already computed
+        if (dp[i][j] != -1) {
+            return dp[i][j];
+        }
+
+        // If characters match, add 1 and move diagonally
+        if (s1.charAt(i) == s2.charAt(j)) {
+            dp[i][j] = 1 + lcsHelper(s1, s2, i - 1, j - 1);
+        } else {
+            // If not match, take max by moving in either string
+            int move1 = lcsHelper(s1, s2, i - 1, j);
+            int move2 = lcsHelper(s1, s2, i, j - 1);
+            dp[i][j] = Math.max(move1, move2);
+        }
+
+        return dp[i][j];
+    }
+
+    // Driver code
+    public static void main(String[] args) {
+        String text1 = "abcde";
+        String text2 = "ace";
+
+        int result = longestCommonSubsequence(text1, text2);
+        System.out.println("Length of LCS is: " + result);
+    }
+}
