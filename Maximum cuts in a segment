@@ -1,0 +1,51 @@
+//Maximum cuts in a segment 
+
+import java.util.Scanner;
+
+public class MaxCutsRecursive {
+
+    // Recursive function to find max number of cuts
+    public static int maximizeTheCuts(int n, int x, int y, int z) {
+        // Base case: exact length reached
+        if (n == 0) return 0;
+
+        // Base case: invalid cut (went below 0)
+        if (n < 0) return -1;
+
+        // Try cutting length x, y, or z and solve recursively
+        int a = maximizeTheCuts(n - x, x, y, z);
+        int b = maximizeTheCuts(n - y, x, y, z);
+        int c = maximizeTheCuts(n - z, x, y, z);
+
+        // Take the maximum of the 3 choices
+        int maxCuts = Math.max(a, Math.max(b, c));
+
+        // If all options are invalid, return -1
+        // Else, return maxCuts + 1 for current cut
+        if (maxCuts == -1) return -1;
+        return maxCuts + 1;
+    }
+
+    // Main method to take input and show result
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter the value of n: ");
+        int n = sc.nextInt();
+
+        System.out.print("Enter the values of x, y and z: ");
+        int x = sc.nextInt();
+        int y = sc.nextInt();
+        int z = sc.nextInt();
+
+        int result = maximizeTheCuts(n, x, y, z);
+
+        // If result is -1, it means no valid cuts possible, so return 0
+        System.out.println("The max cut segments: " + Math.max(0, result));
+        sc.close();
+    }
+}
+
+
+
+
