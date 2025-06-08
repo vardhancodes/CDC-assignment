@@ -1,0 +1,16 @@
+//Staircase Problem (Climbing Stairs)  
+
+class Solution {
+    public int climbStairs(int n) {
+        // Base case 1: If there's 0 step, there's 1 way (stay there)
+        // Base case 2: If there's 1 step, there's only 1 way (1 step)
+        if (n == 0 || n == 1) {
+            return 1;
+        }
+
+        // Recursive case:
+        // To reach step `n`, you could have come from step `n-1` or `n-2`
+        // So, total ways = ways to reach (n-1) + ways to reach (n-2)
+        return climbStairs(n - 1) + climbStairs(n - 2);
+    }
+}
