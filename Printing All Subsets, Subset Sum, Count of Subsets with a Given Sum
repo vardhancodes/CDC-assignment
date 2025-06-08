@@ -1,0 +1,34 @@
+//Printing All Subsets, Subset Sum, Count of Subsets with a Given Sum 
+
+import java.util.*;
+
+public class SubsetGenerator {
+
+    // Recursive function to generate all subsets
+    public static void subsets(List<Integer> ans, List<Integer> nums, int idx) {
+        // Base case: when index reaches end of array
+        if (idx == nums.size()) {
+            // Print the current subset (ans)
+            for (int val : ans) {
+                System.out.print(val);
+            }
+            System.out.println();
+            return;
+        }
+
+        // Case 1: Do not pick current element
+        subsets(new ArrayList<>(ans), nums, idx + 1);
+
+        // Case 2: Pick current element
+        ans.add(nums.get(idx));  // push_back equivalent
+        subsets(new ArrayList<>(ans), nums, idx + 1);
+    }
+
+    public static void main(String[] args) {
+        // Input list
+        List<Integer> nums = Arrays.asList(1, 2, 3);
+
+        // Start recursion with empty list and index 0
+        subsets(new ArrayList<>(), nums, 0);
+    }
+}
