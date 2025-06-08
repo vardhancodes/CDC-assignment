@@ -1,0 +1,64 @@
+//Partition Equal Subset Sum 
+
+import java.util.*;
+
+public class PartitionEqualSubsetSum {
+
+    // Helper function to check if we can reach the target using elements up to index 'i'
+    public static boolean canPartition(int[] nums) {
+        int totalSum = 0;
+
+        // Step 1: Calculate total sum of array
+        for (int num : nums) {
+            totalSum += num;
+        }
+
+        // Step 2: If sum is odd, it's impossible to divide into 2 equal parts
+        if (totalSum % 2 != 0) return false;
+
+        int target = totalSum / 2;
+
+        // Step 3: Create memo table to store intermediate results
+        // dp[i][j] = true/false => can we make sum 'j' using elements up to index 'i'
+        Boolean[][] dp = new Boolean[nums.length][target + 1];
+
+        // Step 4: Start recursion from index 0 and target sum
+        return isSubsetSum(nums, 0, target, dp);
+    }
+
+    // Recursive function with memoization
+    private static boolean isSubsetSum(int[] nums, int index, int target, Boolean[][] dp) {
+        // Base Case: Target achieved
+        if (target == 0) return true;
+
+        // Base Case: End of array or invalid target
+        if (index >= nums.length || target < 0) return false;
+
+        // If result already computed, return it
+        if (dp[index][target] != null) return dp[index][target];
+
+        // Option 1: Skip current number
+        boolean notTake = isSubsetSum(nums, index + 1, target, dp);
+
+        // Option 2: Take current number if it's not too large
+        boolean take = false;
+        if (nums[index] <= target) {
+            take = isSubsetSum(nums, index + 1, target - nums[index], dp);
+        }
+
+        // Store result in dp and return
+        dp[index][target] = take || notTake;
+        return dp[index][target];
+    }
+
+    // Driver code
+    public static void main(String[] args) {
+        int[] nums = {1, 5, 11, 5};
+
+        if (canPartition(nums)) {
+            System.out.println("The array can be partitioned into two equal subsets.");
+        } else {
+            System.out.println("The array cannot be partitioned into two equal subsets.");
+        }
+    }
+}
