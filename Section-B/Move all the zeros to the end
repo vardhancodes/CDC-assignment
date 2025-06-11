@@ -1,0 +1,29 @@
+public class MoveZeroes {
+
+    public static void moveZeroes(int[] nums) {
+        // We'll use this pointer to track where the next non-zero element should go
+        int index = 0;
+
+        // Let's walk through the entire array
+        for (int i = 0; i < nums.length; i++) {
+            // If the current number isn't zero, it's valuable, so we keep it
+            if (nums[i] != 0) {
+                // Place the non-zero number at the correct position (pointed by index)
+                nums[index] = nums[i];
+
+                // If i and index are different, that means we just "moved" a number
+                if (i != index) {
+                    // And we leave a zero behind — simulating the "move"
+                    nums[i] = 0;
+                }
+
+                // Now move the index forward for the next non-zero
+                index++;
+            }
+        }
+        // By now, all non-zero elements are at the front, and zeroes are at the end
+    }
+
+
+    
+}
