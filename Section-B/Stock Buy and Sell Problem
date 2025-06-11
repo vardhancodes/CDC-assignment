@@ -1,0 +1,30 @@
+public class StockBuySell {
+    public static void main(String[] args) {
+        int[] prices = {7, 1, 5, 3, 6, 4};
+        int n = prices.length;
+
+        if (n == 0) {
+            System.out.println("No prices given.");
+            return;
+        }
+
+        int minPrice = prices[0]; // assume we bought on day 0
+        int maxProfit = 0;        // no profit initially
+
+        for (int i = 1; i < n; i++) {
+            int todayProfit = prices[i] - minPrice;
+
+            // Update max profit if better deal is found
+            if (todayProfit > maxProfit) {
+                maxProfit = todayProfit;
+            }
+
+            // Update minPrice if today's price is lower
+            if (prices[i] < minPrice) {
+                minPrice = prices[i];
+            }
+        }
+
+        System.out.println("Maximum profit: " + maxProfit);
+    }
+}
