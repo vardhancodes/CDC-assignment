@@ -1,0 +1,26 @@
+public class LeftRotateUsingTemp {
+
+    // Main logic to left rotate an array by d positions
+    static void leftRotate(int[] arr, int d) {
+        int n = arr.length;
+
+        // In case d is more than array size, rotate only the remainder
+        d = d % n;
+
+        // Step 1: Let's copy the first 'd' elements in a temp array
+        int[] temp = new int[d];
+        for (int i = 0; i < d; i++) {
+            temp[i] = arr[i]; // store the first d items
+        }
+
+        // Step 2: Shift the rest of the elements to the left
+        for (int i = d; i < n; i++) {
+            arr[i - d] = arr[i]; // move each element d places back
+        }
+
+        // Step 3: Now put the saved 'd' elements at the end
+        for (int i = 0; i < d; i++) {
+            arr[n - d + i] = temp[i]; // put the earlier saved items at the back
+        }
+}
+}
