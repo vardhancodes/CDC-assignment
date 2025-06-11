@@ -1,0 +1,31 @@
+public class SubarrayWithGivenSum {
+    public static void main(String[] args) {
+        int[] arr = {1, 4, 20, 3, 10, 5};
+        int target = 33;
+
+        findSubarrayWithSum(arr, target);
+    }
+
+    public static void findSubarrayWithSum(int[] arr, int target) {
+        int start = 0, currSum = 0;
+
+        for (int end = 0; end < arr.length; end++) {
+            // Add current element to currSum
+            currSum += arr[end];
+
+            // If sum becomes more than target, remove from start
+            while (currSum > target && start <= end) {
+                currSum -= arr[start];
+                start++;
+            }
+
+            // Check if we found the target sum
+            if (currSum == target) {
+                System.out.println("Subarray found from index " + start + " to " + end);
+                return;
+            }
+        }
+
+        System.out.println("No subarray found with the given sum.");
+    }
+}
